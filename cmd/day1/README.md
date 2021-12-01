@@ -37,8 +37,9 @@ Finally I was looking up how a format string works in golang. Pretty straightfor
 
 I did not quite figure out the difference yet between `fmt.Printf()` and `fmt.Sprintf()` but I put this article to my reading list: [Golang’s fmt.Sprintf() and Printf() Demystified | by Dirk Avery | FAUN Publication](https://faun.pub/golangs-fmt-sprintf-and-printf-demystified-4adf6f9722a2)
 
-
 ### Part 2
+
+[Day 1 - Advent of Code 2021: Part2](https://adventofcode.com/2021/day/1#part2)
 
 I was able to solve part two with all information that I already gathered for part1. My first approach was straigthforward but contained unnecessary calculations:
 
