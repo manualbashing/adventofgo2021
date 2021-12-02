@@ -4,5 +4,5 @@
 
 My participation in the Advent of Code 2021 event and my first baby steps in Golang.
 
-- [Day 1](cmd/day1)
-- [Day 2](cmd/day2)
+- [Day 1: Sonar Sweeps](cmd/day1)
+- [Day 2: Dive!](cmd/day2)

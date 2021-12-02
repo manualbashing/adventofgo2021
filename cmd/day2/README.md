@@ -1,6 +1,6 @@
 ## Day 2 Lessons learned
 
-[Day 2 - Advent of Code 2021: Sonar Sweeps](https://adventofcode.com/2021/day/2)
+[Day 2 - Advent of Code 2021: Dive!](https://adventofcode.com/2021/day/2)
 
 ## Part 1
 
