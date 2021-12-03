@@ -47,3 +47,15 @@ p2 "github.com/manualbashing/adventofgo2021/cmd/day2/part2" // 👍
 ---
 
 Another important takeaway was, that imported modules **must not** have a name that is already used by a function in the same part of the program. Otherwise the compiler won't know, what to do. (In my case the trouble was the function `part2()`)
+
+---
+
+I learned that if I want to use something like a setter-method on a struct, I have to make sure, that the method gets a pointer `*`  to the struct!
+
+```go
+func (c *SubmarineControls) Forward(x int) {
+	c.Aim = x
+}
+```
+
+Without the `*`  the method would receive only a copy of the struct. Fine for reading but useless for changing any value in the struct! [How to set and get fields in struct's method - Stack Overflow](https://stackoverflow.com/questions/11810218/how-to-set-and-get-fields-in-structs-method)
