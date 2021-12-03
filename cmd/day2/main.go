@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	p2 "github.com/manualbashing/adventofgo2021/cmd/day2/part2"
 )
 
 func readPlannedCourse() [][]string {
@@ -52,9 +54,41 @@ func part1() int {
 	return horizontal * depth
 }
 
+func part2() int {
+
+	c := p2.SubmarineControls{
+		Aim:        0,
+		Horizontal: 0,
+		Depth:      0,
+	}
+
+	plannedCourse := readPlannedCourse()
+
+	for _, instruction := range plannedCourse {
+
+		x, err := strconv.Atoi(instruction[1])
+		check(err)
+
+		switch instruction[0] {
+
+		case "forward":
+			c.Forward(x)
+		case "up":
+			c.Up(x)
+		case "down":
+			c.Down(x)
+		}
+	}
+
+	return c.Horizontal * c.Depth
+}
+
 func main() {
 
 	fmt.Println("-- Executing part one")
 	fmt.Printf("   Result: %d\n", part1())
+
+	fmt.Println("-- Executing part two")
+	fmt.Printf("   Result: %d\n", part2())
 
 }
