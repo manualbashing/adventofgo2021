@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	p2 "github.com/manualbashing/adventofgo2021/cmd/day2/part2"
 )
 
 func readPlannedCourse() [][]string {
@@ -52,9 +54,24 @@ func part1() int {
 	return horizontal * depth
 }
 
+func part2() int {
+
+	c := p2.SubmarineControls{
+		Aim:        0,
+		Horizontal: 0,
+		Depth:      0,
+	}
+	c.Forward(10)
+
+	return c.Aim
+}
+
 func main() {
 
 	fmt.Println("-- Executing part one")
 	fmt.Printf("   Result: %d\n", part1())
+
+	fmt.Println("-- Executing part two")
+	fmt.Printf("   Result: %d\n", part2())
 
 }
