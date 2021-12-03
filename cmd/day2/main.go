@@ -61,9 +61,26 @@ func part2() int {
 		Horizontal: 0,
 		Depth:      0,
 	}
-	c.Forward(10)
 
-	return c.Aim
+	plannedCourse := readPlannedCourse()
+
+	for _, instruction := range plannedCourse {
+
+		x, err := strconv.Atoi(instruction[1])
+		check(err)
+
+		switch instruction[0] {
+
+		case "forward":
+			c.Forward(x)
+		case "up":
+			c.Up(x)
+		case "down":
+			c.Down(x)
+		}
+	}
+
+	return c.Horizontal * c.Depth
 }
 
 func main() {
