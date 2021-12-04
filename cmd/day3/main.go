@@ -31,8 +31,8 @@ func readData() []string {
 	return data
 }
 
-func part1() int64 {
-	data := readData()
+func countBits(data []string) []int {
+
 	bitCountArray := make([]int, len(data[0]))
 	for _, line := range data {
 
@@ -44,6 +44,12 @@ func part1() int64 {
 			bitCountArray[i] += currentBit
 		}
 	}
+	return bitCountArray
+}
+
+func part1() int64 {
+	data := readData()
+	bitCountArray := countBits(data)
 
 	var gammaRate string
 	var epsilonRate string
