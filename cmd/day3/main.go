@@ -46,14 +46,20 @@ func part1() int64 {
 	}
 
 	var gammaRate string
+	var epsilonRate string
 	for _, n := range bitCountArray {
 		if n > len(data)/2 {
 			gammaRate += "1"
+			epsilonRate += "0"
 		} else {
 			gammaRate += "0"
+			epsilonRate += "1"
 		}
 	}
-	result, err := strconv.ParseInt(gammaRate, 2, 0)
+
+	gammaRateInt, err := strconv.ParseInt(gammaRate, 2, 0)
 	check(err)
-	return result
+	epsilonRateInt, err := strconv.ParseInt(epsilonRate, 2, 0)
+	check(err)
+	return gammaRateInt * epsilonRateInt
 }
