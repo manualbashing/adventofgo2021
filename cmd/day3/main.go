@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("-- Executing part one")
 	fmt.Printf("   Result: %d\n", part1())
 	fmt.Println("-- Executing part two")
-	fmt.Printf("   Result: %d\n", part2())
+	fmt.Printf("   Result: %s\n", part2())
 }
 
 func check(e error) {
@@ -67,6 +67,19 @@ func getRates(data []string) (string, string) {
 	return gammaRate, epsilonRate
 }
 
+func countBitsOnPosition(data []string, pos int) int {
+
+	var bitCount int
+	for _, line := range data {
+
+		currentBitString := strings.Split(line, "")[pos]
+		currentBit, err := strconv.Atoi(currentBitString)
+		check(err)
+		bitCount += currentBit
+	}
+	return bitCount
+}
+
 func part1() int64 {
 	data := readData()
 	gammaRate, epsilonRate := getRates(data)
@@ -78,8 +91,25 @@ func part1() int64 {
 	return gammaRateInt * epsilonRateInt
 }
 
-func part2() int {
+func part2() string {
 
-	data := readData()
-	return len(data)
+	currentDataSet := readData()
+	for matchFound := true; matchFound; matchFound = len(currentDataSet) == 1 {
+		for pos := 0; pos < len(currentDataSet[0]); pos++ {
+
+			bitCount := countBitsOnPosition(currentDataSet, pos)
+			mostCommonBit := "0"[0]
+			if bitCount >= len(currentDataSet) {
+				mostCommonBit = "1"[0]
+			}
+			var reducedDataSet []string
+			for _, v := range currentDataSet {
+				if v[0] == mostCommonBit {
+					reducedDataSet = append(reducedDataSet, v)
+				}
+			}
+			currentDataSet = reducedDataSet
+		}
+	}
+	return currentDataSet[0]
 }
