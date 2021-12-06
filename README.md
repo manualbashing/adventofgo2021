@@ -6,3 +6,4 @@ My participation in the Advent of Code 2021 event and my first baby steps in Gol
 
 - [Day 1: Sonar Sweeps](cmd/day1)
 - [Day 2: Dive!](cmd/day2)
+- [Day 3: Binary Diagnostics](cmd/day3)
