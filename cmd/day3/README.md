@@ -36,3 +36,10 @@ Using a for loop this way seems more flexible anyways.
 
  value1,value2 := function()
  ```
+ 
+ ---
+
+I learned a bit about type conversions:
+
+- `"0"[0]` will be of type `byte`, so there is no use to compare `"1001"[0] == "1"`
+- There is no conversion from `bool` to `int`: https://github.com/golang/go/issues/9367

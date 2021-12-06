@@ -91,25 +91,34 @@ func part1() int64 {
 	return gammaRateInt * epsilonRateInt
 }
 
-func part2() string {
+func getMostCommonBit(bitCount int, dataLength int) string {
+	mostCommonBit := "0"
+	if bitCount >= dataLength {
+		mostCommonBit = "1"
+	}
+	return mostCommonBit
+}
 
-	currentDataSet := readData()
-	for matchFound := true; matchFound; matchFound = len(currentDataSet) == 1 {
-		for pos := 0; pos < len(currentDataSet[0]); pos++ {
+func reduceDataSet(data []string, matchBitFunc func(int, int) string) string {
+	for matchFound := true; matchFound; matchFound = len(data) == 1 {
+		for pos := 0; pos < len(data[0]); pos++ {
 
-			bitCount := countBitsOnPosition(currentDataSet, pos)
-			mostCommonBit := "0"[0]
-			if bitCount >= len(currentDataSet) {
-				mostCommonBit = "1"[0]
-			}
-			var reducedDataSet []string
-			for _, v := range currentDataSet {
-				if v[0] == mostCommonBit {
-					reducedDataSet = append(reducedDataSet, v)
+			bitCount := countBitsOnPosition(data, pos)
+			matchBit := matchBitFunc(bitCount, len(data))
+			var reducedData []string
+			for _, v := range data {
+				if string(v[0]) == matchBit {
+					reducedData = append(reducedData, v)
 				}
 			}
-			currentDataSet = reducedDataSet
+			data = reducedData
 		}
 	}
-	return currentDataSet[0]
+	return data[0]
+}
+
+func part2() string {
+
+	data := readData()
+	return reduceDataSet(data, getMostCommonBit)
 }
