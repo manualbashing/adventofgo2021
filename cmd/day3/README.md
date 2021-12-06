@@ -43,3 +43,20 @@ I learned a bit about type conversions:
 
 - `"0"[0]` will be of type `byte`, so there is no use to compare `"1001"[0] == "1"`
 - There is no conversion from `bool` to `int`: https://github.com/golang/go/issues/9367
+
+---
+
+Huh! It is possible to pass in functions as parameter arguments to other functions!
+
+```go
+func getMostCommonBit(bitCount int, dataLength int) string {
+    return ""
+}
+
+func reduceDataSet(data []string, matchBitFunc func(int, int) string) string {
+    foo := matchBitFunc(1,2)
+    return foo
+}
+
+reduceDataSet(data, getMostCommonBit)
+```
