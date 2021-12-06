@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("-- Executing part one")
 	fmt.Printf("   Result: %d\n", part1())
 	fmt.Println("-- Executing part two")
-	fmt.Printf("   Result: %s\n", part2())
+	fmt.Printf("   Result: %d\n", part2())
 }
 
 func check(e error) {
@@ -80,45 +80,59 @@ func countBitsOnPosition(data []string, pos int) int {
 	return bitCount
 }
 
-func part1() int64 {
+func part1() int {
 	data := readData()
 	gammaRate, epsilonRate := getRates(data)
-
-	gammaRateInt, err := strconv.ParseInt(gammaRate, 2, 0)
-	check(err)
-	epsilonRateInt, err := strconv.ParseInt(epsilonRate, 2, 0)
-	check(err)
-	return gammaRateInt * epsilonRateInt
+	return binaryMultiplication(gammaRate, epsilonRate)
 }
 
 func getMostCommonBit(bitCount int, dataLength int) string {
 	mostCommonBit := "0"
-	if bitCount >= dataLength {
+	if float32(bitCount) >= float32(dataLength)/2 {
 		mostCommonBit = "1"
 	}
 	return mostCommonBit
 }
 
-func reduceDataSet(data []string, matchBitFunc func(int, int) string) string {
-	for matchFound := true; matchFound; matchFound = len(data) == 1 {
-		for pos := 0; pos < len(data[0]); pos++ {
+func getLeastCommonBit(bitCount int, dataLength int) string {
+	leastCommonBit := "1"
+	if float32(bitCount) >= float32(dataLength)/2 {
+		leastCommonBit = "0"
+	}
+	return leastCommonBit
+}
 
-			bitCount := countBitsOnPosition(data, pos)
-			matchBit := matchBitFunc(bitCount, len(data))
-			var reducedData []string
-			for _, v := range data {
-				if string(v[0]) == matchBit {
-					reducedData = append(reducedData, v)
-				}
+func reduceDataSet(data []string, matchBitFunc func(int, int) string) string {
+	pos := 0
+	for matchFound := true; matchFound; matchFound = len(data) > 1 {
+
+		bitCount := countBitsOnPosition(data, pos)
+		matchBit := matchBitFunc(bitCount, len(data))
+		var reducedData []string
+		for _, v := range data {
+			if string(v[pos]) == matchBit {
+				reducedData = append(reducedData, v)
 			}
-			data = reducedData
 		}
+		data = reducedData
+		pos++
 	}
 	return data[0]
 }
 
-func part2() string {
+func binaryMultiplication(x string, y string) int {
+	xInt, err := strconv.ParseInt(x, 2, 0)
+	check(err)
+	yInt, err := strconv.ParseInt(y, 2, 0)
+	check(err)
+	return int(xInt * yInt)
+}
+
+func part2() int {
 
 	data := readData()
-	return reduceDataSet(data, getMostCommonBit)
+	oxGeneratorRating := reduceDataSet(data, getMostCommonBit)
+	co2ScrubberRating := reduceDataSet(data, getLeastCommonBit)
+
+	return binaryMultiplication(oxGeneratorRating, co2ScrubberRating)
 }
