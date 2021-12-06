@@ -11,6 +11,8 @@ import (
 func main() {
 	fmt.Println("-- Executing part one")
 	fmt.Printf("   Result: %d\n", part1())
+	fmt.Println("-- Executing part two")
+	fmt.Printf("   Result: %d\n", part2())
 }
 
 func check(e error) {
@@ -47,12 +49,12 @@ func countBits(data []string) []int {
 	return bitCountArray
 }
 
-func part1() int64 {
-	data := readData()
-	bitCountArray := countBits(data)
+func getRates(data []string) (string, string) {
 
+	bitCountArray := countBits(data)
 	var gammaRate string
 	var epsilonRate string
+
 	for _, n := range bitCountArray {
 		if n > len(data)/2 {
 			gammaRate += "1"
@@ -62,10 +64,22 @@ func part1() int64 {
 			epsilonRate += "1"
 		}
 	}
+	return gammaRate, epsilonRate
+}
+
+func part1() int64 {
+	data := readData()
+	gammaRate, epsilonRate := getRates(data)
 
 	gammaRateInt, err := strconv.ParseInt(gammaRate, 2, 0)
 	check(err)
 	epsilonRateInt, err := strconv.ParseInt(epsilonRate, 2, 0)
 	check(err)
 	return gammaRateInt * epsilonRateInt
+}
+
+func part2() int {
+
+	data := readData()
+	return len(data)
 }

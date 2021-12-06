@@ -11,3 +11,28 @@ strconv.ParseInt(gammaRate, 2, 0)
 ```
 
 Unfortunately it will return a `int64` type. I have not yet figured out, how to return a simple `int` like `strconv.Atoi()` does.
+
+## Part 2
+
+There are no while loops in Go. And that is actually a clever thing.
+
+```go
+for matchFound := true; matchFound; matchFound = len(matches) == 1 {
+		matches = append(matches, "foo")
+}
+```
+
+Using a for loop this way seems more flexible anyways.
+
+---
+ 
+ There is an interesting way how functions are defined to returen multiple values:
+
+ ```go
+ func function() (string, string) {
+
+     return "foo","bar"
+ }
+
+ value1,value2 := function()
+ ```
