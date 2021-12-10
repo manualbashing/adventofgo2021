@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -43,6 +44,21 @@ func (b Board) CheckBingo() bool {
 		}
 	}
 	return false
+}
+
+func (b Board) GetWinningSum() int {
+	sum := 0
+	for _, row := range b.Data {
+		for _, col := range row {
+			if strings.HasPrefix(col, "x") {
+				continue
+			}
+			val, err := strconv.Atoi(col)
+			check(err)
+			sum += val
+		}
+	}
+	return sum
 }
 
 func main() {
@@ -92,7 +108,7 @@ func checkBingo(input []string) bool {
 
 func playBingo(numbers []string, boards []Board) (string, Board) {
 	for _, n := range numbers {
-		fmt.Println("Drawn number: ", n)
+
 		for _, b := range boards {
 
 			b.Mark(n)
@@ -107,7 +123,8 @@ func playBingo(numbers []string, boards []Board) (string, Board) {
 func part1() int {
 	drawnNumbers, boards := readBoards()
 	lastNumber, bingoBoard := playBingo(drawnNumbers, boards)
-	fmt.Println("Last number: ", lastNumber)
-	fmt.Println("Bingo Board: ", bingoBoard)
-	return 1
+	val, err := strconv.Atoi(lastNumber)
+	check(err)
+	sum := bingoBoard.GetWinningSum() * val
+	return sum
 }
