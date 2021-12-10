@@ -90,16 +90,24 @@ func checkBingo(input []string) bool {
 	return (marked == 5)
 }
 
+func playBingo(numbers []string, boards []Board) (string, Board) {
+	for _, n := range numbers {
+		fmt.Println("Drawn number: ", n)
+		for _, b := range boards {
+
+			b.Mark(n)
+			if b.CheckBingo() {
+				return n, b
+			}
+		}
+	}
+	return "", Board{}
+}
+
 func part1() int {
 	drawnNumbers, boards := readBoards()
-	fmt.Println("Drawn numbers: ", drawnNumbers)
-
-	for _, b := range boards {
-		b.Mark("85")
-		b.Mark("78")
-		b.CheckBingo()
-	}
-
-	fmt.Print("Bingo boards: ", boards)
+	lastNumber, bingoBoard := playBingo(drawnNumbers, boards)
+	fmt.Println("Last number: ", lastNumber)
+	fmt.Println("Bingo Board: ", bingoBoard)
 	return 1
 }
