@@ -26,6 +26,12 @@ func (b *Board) Mark(number string) {
 }
 
 func (b Board) CheckBingo() bool {
+
+	// Skip empty boards
+	if b.Data == nil {
+		return false
+	}
+
 	// Check Rows
 	for _, row := range b.Data {
 		if checkBingo(row) {
@@ -64,6 +70,8 @@ func (b Board) GetFinalScore() int {
 func main() {
 	fmt.Println("-- Executing part one")
 	fmt.Printf("   Result: %d\n", part1())
+	fmt.Println("-- Executing part two")
+	fmt.Printf("   Result: %d\n", part2())
 }
 
 func readBoards() ([]string, []Board) {
@@ -106,7 +114,7 @@ func checkBingo(input []string) bool {
 	return (marked == 5)
 }
 
-func playBingo(numbers []string, boards []Board) (string, Board) {
+func winBingo(numbers []string, boards []Board) (string, Board) {
 	for _, n := range numbers {
 
 		for _, b := range boards {
@@ -120,9 +128,35 @@ func playBingo(numbers []string, boards []Board) (string, Board) {
 	return "", Board{}
 }
 
+func looseBingo(numbers []string, boards []Board) (string, Board) {
+	var winningBoards []Board
+	var winningNumbers []string
+	for _, n := range numbers {
+		for i := 0; i < len(boards); i++ {
+			b := boards[i]
+			b.Mark(n)
+			if b.CheckBingo() {
+				winningBoards = append(winningBoards, b)
+				winningNumbers = append(winningNumbers, n)
+				boards[i] = Board{} // Remove winning from iteration
+			}
+		}
+	}
+	return winningNumbers[len(winningNumbers)-1], winningBoards[len(winningBoards)-1]
+}
+
 func part1() int {
 	drawnNumbers, boards := readBoards()
-	lastNumber, bingoBoard := playBingo(drawnNumbers, boards)
+	lastNumber, bingoBoard := winBingo(drawnNumbers, boards)
+	lastNumberInt, err := strconv.Atoi(lastNumber)
+	check(err)
+	score := bingoBoard.GetFinalScore() * lastNumberInt
+	return score
+}
+
+func part2() int {
+	drawnNumbers, boards := readBoards()
+	lastNumber, bingoBoard := looseBingo(drawnNumbers, boards)
 	lastNumberInt, err := strconv.Atoi(lastNumber)
 	check(err)
 	score := bingoBoard.GetFinalScore() * lastNumberInt
