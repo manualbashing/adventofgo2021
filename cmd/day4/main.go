@@ -66,8 +66,9 @@ func readBoards() ([]string, []Board) {
 			boardData = nil
 			continue
 		}
-		line := regexp.MustCompile(`[, ]+`).Split(scanner.Text(), -1)
-		boardData = append(boardData, line)
+		line := strings.TrimSpace(scanner.Text())
+		lineArr := regexp.MustCompile(`[, ]+`).Split(line, -1)
+		boardData = append(boardData, lineArr)
 	}
 	drawnNumbers := boardCollection[0].Data[0]
 	return drawnNumbers, boardCollection[1:]
