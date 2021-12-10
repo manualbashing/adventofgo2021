@@ -46,7 +46,7 @@ func (b Board) CheckBingo() bool {
 	return false
 }
 
-func (b Board) GetWinningSum() int {
+func (b Board) GetFinalScore() int {
 	sum := 0
 	for _, row := range b.Data {
 		for _, col := range row {
@@ -123,8 +123,8 @@ func playBingo(numbers []string, boards []Board) (string, Board) {
 func part1() int {
 	drawnNumbers, boards := readBoards()
 	lastNumber, bingoBoard := playBingo(drawnNumbers, boards)
-	val, err := strconv.Atoi(lastNumber)
+	lastNumberInt, err := strconv.Atoi(lastNumber)
 	check(err)
-	sum := bingoBoard.GetWinningSum() * val
-	return sum
+	score := bingoBoard.GetFinalScore() * lastNumberInt
+	return score
 }
