@@ -24,23 +24,24 @@ func (b *Board) Mark(number string) {
 	}
 }
 
-func (b *Board) CheckBingo() bool {
+func (b Board) CheckBingo() bool {
 	// Check Rows
-	for _, line := range b.Data {
-		marked := 0
-		for _, c := range line {
-			if strings.HasPrefix(c, "x") {
-				marked++
-			}
-		}
-		if marked == 5 {
+	for _, row := range b.Data {
+		if checkBingo(row) {
 			return true
 		}
-		marked = 0
 	}
 
 	// Check Cols
-
+	for i := 0; i < len(b.Data[0]); i++ {
+		var col []string
+		for j := 0; j < len(b.Data); j++ {
+			col = append(col, b.Data[j][i])
+		}
+		if checkBingo(col) {
+			return true
+		}
+	}
 	return false
 }
 
@@ -78,6 +79,16 @@ func check(e error) {
 	}
 }
 
+func checkBingo(input []string) bool {
+	marked := 0
+	for _, c := range input {
+		if strings.HasPrefix(c, "x") {
+			marked++
+		}
+	}
+	return (marked == 5)
+}
+
 func part1() int {
 	drawnNumbers, boards := readBoards()
 	fmt.Println("Drawn numbers: ", drawnNumbers)
@@ -85,6 +96,7 @@ func part1() int {
 	for _, b := range boards {
 		b.Mark("85")
 		b.Mark("78")
+		b.CheckBingo()
 	}
 
 	fmt.Print("Bingo boards: ", boards)
