@@ -12,8 +12,15 @@ type Board struct {
 	Data [][]string
 }
 
-func (b *Board) Init() {
+func (b *Board) Mark(number string) {
 
+	for i := 0; i < len(b.Data); i++ {
+		for j := 0; j < len(b.Data[i]); j++ {
+			if b.Data[i][j] == number {
+				b.Data[i][j] = ("x" + number)
+			}
+		}
+	}
 }
 
 func main() {
@@ -53,6 +60,12 @@ func check(e error) {
 func part1() int {
 	drawnNumbers, boards := readBoards()
 	fmt.Println("Drawn numbers: ", drawnNumbers)
+
+	for _, b := range boards {
+		b.Mark("85")
+		b.Mark("78")
+	}
+
 	fmt.Print("Bingo boards: ", boards)
 	return 1
 }
