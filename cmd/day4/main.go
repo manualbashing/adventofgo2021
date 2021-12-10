@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strings"
 )
 
 type Board struct {
@@ -21,6 +22,26 @@ func (b *Board) Mark(number string) {
 			}
 		}
 	}
+}
+
+func (b *Board) CheckBingo() bool {
+	// Check Rows
+	for _, line := range b.Data {
+		marked := 0
+		for _, c := range line {
+			if strings.HasPrefix(c, "x") {
+				marked++
+			}
+		}
+		if marked == 5 {
+			return true
+		}
+		marked = 0
+	}
+
+	// Check Cols
+
+	return false
 }
 
 func main() {
